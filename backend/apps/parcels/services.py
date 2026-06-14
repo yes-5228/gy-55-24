@@ -6,7 +6,7 @@ from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
 from apps.lockers.models import LockerCell
-from apps.notifications.services import send_pickup_notification
+from apps.notifications.services import send_pickup_notifications_by_preference
 from .models import Parcel
 
 
@@ -40,7 +40,7 @@ def inbound_parcel(validated_data):
     )
     cell.status = LockerCell.Status.OCCUPIED
     cell.save(update_fields=["status", "updated_at"])
-    send_pickup_notification(parcel)
+    send_pickup_notifications_by_preference(parcel)
     return parcel
 
 
